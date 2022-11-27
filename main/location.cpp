@@ -11,7 +11,7 @@ private:
 	int noNormalSeats;
 	string locationName;
 public:
-	//default constructor;
+	//default constructor
 	Location() {
 		this->noVipSeats = 0;
 		//as there are no VIP seat allocated, the number of normal seats remains the same
@@ -22,24 +22,21 @@ public:
 
 	//constructor with parameters
 	Location(int noVipSeats, int* vipSeats, string locationName) {
-		if (noVipSeats <= this->maxSeats) {
-			set_noSeats(noVipSeats);
-			if (vipSeats != nullptr && check_vipSeats(noVipSeats, vipSeats) == true) {
+		set_noSeats(noVipSeats);
+		if (vipSeats != nullptr && check_vipSeats(noVipSeats, vipSeats) == true) {
 				this->vipSeats = new int[noVipSeats];
 				for (int i = 0; i < noVipSeats; i++) {
 					this->vipSeats[i] = vipSeats[i];
 				}
-			}
-			else throw "VIP Seating arrangement is incorrect.";
 		}
-		else throw "Number of VIP seats exceeds the theatre capacity.";
+		else throw "VIP Seating arrangement is incorrect.";
 		this->locationName = locationName;
 	}
 
 	//copy constructor
 	Location(const Location& loc) {
 		this->locationName = loc.locationName;
-		if (loc.noVipSeats > 0 && loc.vipSeats != nullptr) {
+		if (loc.noVipSeats > 0 && loc.vipSeats != nullptr && check_vipSeats(loc.noVipSeats, loc.vipSeats)==true) {
 			set_noSeats(loc.noVipSeats);
 			this->vipSeats = new int[loc.noVipSeats];
 			for (int i = 0; i < loc.noVipSeats; i++) {
@@ -57,7 +54,7 @@ public:
 		if (this != &loc) {
 			this->locationName = loc.locationName;
 			if (this->vipSeats != nullptr) delete[] this->vipSeats;
-			if (loc.noVipSeats > 0 && loc.vipSeats != nullptr) {
+			if (loc.noVipSeats > 0 && loc.vipSeats != nullptr && check_vipSeats(loc.noVipSeats, loc.vipSeats)==true) {
 				set_noSeats(loc.noVipSeats);
 				this->vipSeats = new int[loc.noVipSeats];
 				for (int i = 0; i < loc.noVipSeats; i++) {
@@ -102,13 +99,47 @@ public:
 		}
 		else throw "Number of VIP seats exceeds theatre capacity.";
 	}
+	void set_locationName(string locName) {
+		this->locationName = locName;
+	}
+	void set_vipSeats(int noVipSeats, int* vipSeats) {
+		if (check_vipSeats(noVipSeats, vipSeats) == true) {
+			delete[] this->vipSeats;
+			this->vipSeats = new int[noVipSeats];
+			for (int i = 0; i < noVipSeats; i++) {
+				this->vipSeats[i] = vipSeats[i];
+			}
+		}
+	}
 
 	//getters
 	int get_noNormalSeats() {
 		return this->noNormalSeats;
 	}
+	int get_noVipSeats() {
+		return this->noVipSeats;
+	}
 	int get_maxSeats() {
 		return this->maxSeats;
+	}
+	string get_locationName() {
+		return this->locationName;
+	}
+	int* get_vipSeats() {
+		if (this->noVipSeats > 0 && this->vipSeats != nullptr) {
+			int* cVipSeats = new int[this->noVipSeats];
+			for (int i = 0; i < this->noVipSeats; i++) {
+				cVipSeats[i] = this->vipSeats[i];
+			}
+			return cVipSeats;
+		}
+		else return nullptr;
+	}
+	int get_specific_VipSeat(int index) {
+		if (index >= 0 && index < this->noVipSeats && this->vipSeats != nullptr) {
+			return this->vipSeats[index];
+		}
+		else return -1;
 	}
 
 };

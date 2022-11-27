@@ -6,7 +6,15 @@
 using namespace std;
 
 int main() {
-	Location a;
-	a.set_noSeats(100);
-	cout << a.get_noNormalSeats();
+	int noVipSeats = 3;
+	int* vipSeats = new int[noVipSeats];
+	for (int i = 0; i < noVipSeats; i++) {
+		vipSeats[i] = i;
+	}
+	Location a(noVipSeats, vipSeats, "peepee :)");
+	cout << a.get_locationName()<<endl;
+	cout << a.get_noNormalSeats()<<endl;
+	for (int i = 0; i < noVipSeats; i++) {
+		cout << a.get_specific_VipSeat(i) << endl;
+	}
 }
