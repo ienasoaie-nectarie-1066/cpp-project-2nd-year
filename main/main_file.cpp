@@ -7,6 +7,6 @@ using namespace std;
 
 int main() {
 	Location a;
-	a.set_noSeats(7);
+	a.set_noSeats(100);
 	cout << a.get_noNormalSeats();
 }

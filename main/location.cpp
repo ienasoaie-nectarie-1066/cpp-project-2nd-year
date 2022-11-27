@@ -20,21 +20,6 @@ public:
 		this->locationName = "Normal looking movie theatre";
 	}
 
-	//function to check the validity of the VIP seats, so that no two seats are identical and they are all within the 100 seat limit
-	bool check_vipSeats(int noVipSeats, int* vipSeats) {
-		for (int i = 0; i < noVipSeats; i++) {
-			if (vipSeats[i] > 99) {
-				return false;
-			}
-			for (int j = 0; j < noVipSeats; j++) {
-				if (i != j && vipSeats[i] == vipSeats[j]) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
 	//constructor with parameters
 	Location(int noVipSeats, int* vipSeats, string locationName) {
 		if (noVipSeats <= this->maxSeats) {
@@ -67,16 +52,55 @@ public:
 		}
 	}
 
+	//equals operator
+	Location& operator=(const Location& loc) {
+		if (this != &loc) {
+			this->locationName = loc.locationName;
+			if (this->vipSeats != nullptr) delete[] this->vipSeats;
+			if (loc.noVipSeats > 0 && loc.vipSeats != nullptr) {
+				set_noSeats(loc.noVipSeats);
+				this->vipSeats = new int[loc.noVipSeats];
+				for (int i = 0; i < loc.noVipSeats; i++) {
+					this->vipSeats[i] = loc.vipSeats[i];
+				}
+			}
+			else {
+				set_noSeats(0);
+				this->vipSeats = nullptr;
+			}
+		}
+	}
+
 	//destructor
 	~Location() {
 		if (this->vipSeats != nullptr) {
 			delete[] vipSeats;
 		}
 	}
+
+	//misc. methods
+	//method to check VIP seating validity
+	bool check_vipSeats(int noVipSeats, int* vipSeats) {
+		for (int i = 0; i < noVipSeats; i++) {
+			if (vipSeats[i] > 99) {
+				return false;
+			}
+			for (int j = 0; j < noVipSeats; j++) {
+				if (i != j && vipSeats[i] == vipSeats[j]) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	//setters
 	void set_noSeats(int noVipSeats) {
-		this->noNormalSeats = maxSeats - noVipSeats;
-		this->noVipSeats = noVipSeats;
+		if (noVipSeats <= maxSeats) {
+			this->noNormalSeats = maxSeats - noVipSeats;
+			this->noVipSeats = noVipSeats;
+		}
+		else throw "Number of VIP seats exceeds theatre capacity.";
 	}
 
 	//getters
@@ -86,4 +110,5 @@ public:
 	int get_maxSeats() {
 		return this->maxSeats;
 	}
+
 };
