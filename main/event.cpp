@@ -24,6 +24,11 @@ public:
 		return true;
 	}
 	//getters and setters
+	void set_noVipSeats(int noVipSeats) {
+		if (noVipSeats > 0) {
+			this->noVipSeats = noVipSeats;
+		}
+	}
 	void set_vipSeats(int noVipSeats, int* vipSeats) {
 		delete[] this->vipSeats;
 		this->vipSeats = new int[noVipSeats];
@@ -74,6 +79,23 @@ public:
 	~Event() {
 		if (this->vipSeats != nullptr) {
 			delete[] this->vipSeats;	
+		}
+	}
+	Event& operator=(const Event& e) {
+		if (this != &e) {
+			if (this->vipSeats != nullptr) {
+				delete[] vipSeats;
+			}
+			if (e.noVipSeats > 0 && e.vipSeats != nullptr) {
+				this->vipSeats = new int[e.noVipSeats];
+				for (int i = 0; i < e.noVipSeats; i++) {
+					this->vipSeats[i] = e.vipSeats[i];
+				}
+			}
+			else {
+				this->noVipSeats = 0;
+				this->vipSeats = nullptr;
+			}
 		}
 	}
 };

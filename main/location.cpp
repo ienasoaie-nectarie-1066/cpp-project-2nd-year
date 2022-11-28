@@ -5,7 +5,7 @@ using namespace std;
 
 class Location {
 private:
-	const int maxSeats = 100;
+	const int maxSeats;
 	int noVipSeats;
 	int noNormalSeats;
 	string locationName;
@@ -35,7 +35,7 @@ public:
 	}
 
 	//default constructor
-	Location() {
+	Location():maxSeats(0) {
 		this->noVipSeats = 0;
 		//as there are no VIP seat allocated, the number of normal seats remains the same
 		this->noNormalSeats = maxSeats;
@@ -43,7 +43,7 @@ public:
 	}
 
 	//constructor with parameters
-	Location(int noVipSeats, string locationName) {
+	Location(int maxSeats, int noVipSeats, string locationName):maxSeats(maxSeats) {
 		set_noVipSeats(noVipSeats);
 		set_locationName(locationName);
 	}
