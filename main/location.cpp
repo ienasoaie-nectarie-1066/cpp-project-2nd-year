@@ -10,9 +10,16 @@ private:
 	int noNormalSeats;
 	string locationName;
 public:
-
+//misc methods
+	void theatre_locationName() {
+		string t = " theatre";
+		size_t found = this->locationName.find(t);
+		if (found == string::npos) {
+			this->locationName += t;
+		}
+	}
 //setters
-	void set_noSeats(int noVipSeats) {
+	void set_noVipSeats(int noVipSeats) {
 		if (noVipSeats <= maxSeats) {
 			this->noNormalSeats = maxSeats - noVipSeats;
 			this->noVipSeats = noVipSeats;
@@ -22,7 +29,9 @@ public:
 	void set_locationName(string locName) {
 		if (locName.size() > 5) {
 			this->locationName = locName;
+			theatre_locationName();
 		}
+		else cout << "Name must be over 5 characters long, stoopid" << endl;
 	}
 
 	//default constructor
@@ -35,11 +44,8 @@ public:
 
 	//constructor with parameters
 	Location(int noVipSeats, string locationName) {
-		set_noSeats(noVipSeats);
-		if (locationName.size() > 5) {
-			this->locationName = locationName;
-		}
-		else cout << "Minimum 5 character name, stoopid" << endl; 
+		set_noVipSeats(noVipSeats);
+		set_locationName(locationName);
 	}
 
 	//getters

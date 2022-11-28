@@ -8,7 +8,6 @@ private:
 	//all VIP seats must be under 99
 	int* vipSeats;
 	int noVipSeats;
-	Location loc;
 public:
 	//misc methods
 	bool check_vipSeats(int noVipSeats, int* vipSeats) {
@@ -26,12 +25,10 @@ public:
 	}
 	//getters and setters
 	void set_vipSeats(int noVipSeats, int* vipSeats) {
-		if (check_vipSeats(noVipSeats, vipSeats) == true) {
-			delete[] this->vipSeats;
-			this->vipSeats = new int[noVipSeats];
-			for (int i = 0; i < noVipSeats; i++) {
+		delete[] this->vipSeats;
+		this->vipSeats = new int[noVipSeats];
+		for (int i = 0; i < noVipSeats; i++) {
 				this->vipSeats[i] = vipSeats[i];
-			}
 		}
 	}
 	int* get_vipSeats() {
@@ -49,5 +46,34 @@ public:
 			return this->vipSeats[index];
 		}
 		else return -1;
+	}
+	Event() {
+		this->noVipSeats = 0;
+		this->vipSeats = nullptr;
+	}
+	Event(int noVipSeats, int* vipSeats) {
+		if (noVipSeats > 0) {
+			if (vipSeats != nullptr && check_vipSeats(noVipSeats, vipSeats) == true) {
+				set_vipSeats(noVipSeats, vipSeats);
+			}
+		}
+		else {
+			this->noVipSeats = 0;
+			this->vipSeats = nullptr;
+		}
+	}
+	Event(const Event& e) {
+		if (e.noVipSeats > 0 && e.vipSeats != nullptr) {
+			this->vipSeats = new int[e.noVipSeats];
+			for (int i = 0; i < e.noVipSeats; i++) {
+				this->vipSeats[i] = e.vipSeats[i];
+			}
+			this->noVipSeats = e.noVipSeats;
+		}
+	}
+	~Event() {
+		if (this->vipSeats != nullptr) {
+			delete[] this->vipSeats;	
+		}
 	}
 };
