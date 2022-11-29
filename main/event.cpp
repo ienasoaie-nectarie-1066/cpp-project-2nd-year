@@ -103,4 +103,15 @@ public:
 			}
 		}
 	}
+	static float get_avg_noVipSeats(Event* event, int noEvents) {
+		float sum=0;
+		if (event != nullptr && noEvents > 0) {
+			for (int i = 0; i < noEvents; i++) {
+				sum += event[i].noVipSeats;
+			}
+			sum /= noEvents;
+		}
+		return sum;
+	}
 };
+

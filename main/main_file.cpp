@@ -1,13 +1,17 @@
 #include <iostream>
 #include <string>
-#include "location.cpp"
-//#include "event.cpp"
+//#include "location.cpp"
+#include "event.cpp"
 //#include "ticket.cpp"
 using namespace std;
 
 int main() {
 	Location a;
-	a.set_locationName("DingDong");
-	a.set_noVipSeats(13);
-	cout << a.get_locationName() << " " << a.get_noNormalSeats() << " and " << a.get_noVipSeats();
+	int vipSeats1[] = { 3,12,9,18,6 };
+	int vipSeats2[] = { 6, 8 };
+	Event e1(5, vipSeats1);
+	Event e2(2, vipSeats2);
+	Event event[] = {e1,e2};
+	cout << Event::get_avg_noVipSeats(event, 2) << endl;
+
 }

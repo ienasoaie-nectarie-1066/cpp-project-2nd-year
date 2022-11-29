@@ -35,7 +35,7 @@ public:
 	}
 
 	//default constructor
-	Location():maxSeats(0) {
+	Location():maxSeats(100) {
 		this->noVipSeats = 0;
 		//as there are no VIP seat allocated, the number of normal seats remains the same
 		this->noNormalSeats = maxSeats;
