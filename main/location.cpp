@@ -61,4 +61,24 @@ public:
 	string get_locationName() {
 		return this->locationName;
 	}
+	friend inline istream& operator>>(istream& in, Location& loc);
+	friend inline ostream& operator<<(ostream& out, Location loc);
 };
+
+ inline istream& operator>>(istream& in, Location& loc) {
+	cout << endl << "Set location name: ";
+	string buffer;
+	in >> buffer;
+	loc.set_locationName(buffer);
+	cout << "Number of VIP seats: ";
+	in >> loc.noVipSeats;
+	loc.set_noVipSeats(loc.noVipSeats);
+	return in;
+}
+ inline ostream& operator<<(ostream& out, Location loc) {
+	out << "Location name is: " << loc.locationName << endl;
+	out << "The maximum number of seats is: " << loc.maxSeats << endl;
+	out << "Of which VIP seats: " << loc.noVipSeats << endl;
+	out << "And normal seats: " << loc.noNormalSeats << endl;
+	return out;
+}
