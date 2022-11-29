@@ -33,7 +33,7 @@ public:
 		}
 		else cout << "Name must be over 5 characters long, stoopid" << endl;
 	}
-
+	
 	//default constructor
 	Location():maxSeats(100) {
 		this->noVipSeats = 0;

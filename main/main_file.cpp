@@ -13,5 +13,6 @@ int main() {
 	Event e2(2, vipSeats2);
 	Event event[] = {e1,e2};
 	cout << Event::get_avg_noVipSeats(event, 2) << endl;
+	cout << e1.get_specific_VipSeat(2) << endl;
 
 }

@@ -52,7 +52,7 @@ public:
 	}
 	int get_specific_VipSeat(int index) {
 		if (index >= 0 && index < this->noVipSeats && this->vipSeats != nullptr) {
-			return this->vipSeats[index];
+			return this->vipSeats[index - 1];
 		}
 		else return -1;
 	}
