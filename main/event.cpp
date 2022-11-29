@@ -52,7 +52,7 @@ public:
 	}
 	int get_specific_VipSeat(int index) {
 		if (index >= 0 && index < this->noVipSeats && this->vipSeats != nullptr) {
-			return this->vipSeats[index - 1];
+			return this->vipSeats[index];
 		}
 		else return -1;
 	}
@@ -113,6 +113,29 @@ public:
 		}
 		return sum;
 	}
-
+	friend inline istream& operator>>(istream& in, Event& e);
+	friend inline ostream& operator<<(ostream& out, Event e);
 };
+
+inline istream& operator>>(istream& in, Event& e) {
+	cout << endl << "Set location first: ";
+	in >> e.l;
+	e.noVipSeats = e.l.get_noVipSeats();
+	cout << endl << "Set the list of VIP seats: ";
+	int* veepseets = new int[e.l.get_noVipSeats()];
+	for (int i = 0; i < e.noVipSeats; i++) {
+		in >> veepseets[i];
+	}
+	e.set_vipSeats(e.l.get_noVipSeats(), veepseets);
+	return in;
+}
+inline ostream& operator<< (ostream& out, Event e) {
+	out << "Location details: " << endl;
+	out << e.l << endl;
+	out << "And the list of VIP seats: " << endl;
+	for (int i = 0; i < e.noVipSeats; i++) {
+		out << e.get_specific_VipSeat(i) << " ";
+	}
+	return out;
+}
 
