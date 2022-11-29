@@ -5,14 +5,14 @@ using namespace std;
 
 class Event {
 private:
-	//all VIP seats must be under 99
+	Location l;
 	int* vipSeats;
 	int noVipSeats;
 public:
 	//misc methods
 	bool check_vipSeats(int noVipSeats, int* vipSeats) {
 		for (int i = 0; i < noVipSeats; i++) {
-			if (vipSeats[i] > 99) {
+			if (vipSeats[i] > this->l.get_maxSeats()) {
 				return false;
 			}
 			for (int j = 0; j < noVipSeats; j++) {
@@ -25,16 +25,20 @@ public:
 	}
 	//getters and setters
 	void set_noVipSeats(int noVipSeats) {
-		if (noVipSeats > 0) {
+		if (noVipSeats > 0 && noVipSeats < this->l.get_maxSeats()) {
 			this->noVipSeats = noVipSeats;
 		}
+		else cout << "Something's wrong with your number of VIP seats, stoopid.";
 	}
 	void set_vipSeats(int noVipSeats, int* vipSeats) {
 		delete[] this->vipSeats;
 		this->vipSeats = new int[noVipSeats];
-		for (int i = 0; i < noVipSeats; i++) {
+		if (check_vipSeats(noVipSeats, vipSeats) == true) {
+			for (int i = 0; i < noVipSeats; i++) {
 				this->vipSeats[i] = vipSeats[i];
+			}
 		}
+		else cout << "Some seat in your arrangement is wrong, stoopid.";
 	}
 	int* get_vipSeats() {
 		if (this->noVipSeats > 0 && this->vipSeats != nullptr) {
@@ -58,7 +62,8 @@ public:
 	}
 	Event(int noVipSeats, int* vipSeats) {
 		if (noVipSeats > 0) {
-			if (vipSeats != nullptr && check_vipSeats(noVipSeats, vipSeats) == true) {
+			set_noVipSeats(noVipSeats);
+			if (vipSeats != nullptr) {
 				set_vipSeats(noVipSeats, vipSeats);
 			}
 		}
